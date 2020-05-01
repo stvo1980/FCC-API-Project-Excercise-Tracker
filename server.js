@@ -50,7 +50,8 @@ var createAndSaveUser = function(name, done) {
     }else if (data = 'taken'){
       res.send({"error":"Username already taken"})
     }else{
-      res.send({"username":data.username,"id":data._id});
+      res.json({"username":data.username,"id":data._id});
+      
     }
   });
 });
@@ -72,8 +73,8 @@ app.get('/', (req, res) => {
 
 
 //app.post("/api/exercise/new-user", function(req,res){
-//  let userName = req.body.username;
-//  let newUser = new Person({username:name});
+ // let userName = req.body.username;
+ // let newUser = new Person({username:name});
   
   
  // res.json({username:req.body.username, _id:"id"})
