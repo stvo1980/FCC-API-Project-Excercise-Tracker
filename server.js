@@ -5,12 +5,25 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
+mongoose.connect(process.env.MLAB_URI || 3000 )
 
 app.use(cors())
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
+
+const Schema=mongoose.Schema;
+
+var personSchema = new Schema({
+  url: {
+    type: String,
+    required: true
+  }
+})
+var Person = mongoose.model('Person', personSchema); 
+
+
 
 
 app.use(express.static('public'))
