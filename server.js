@@ -16,13 +16,25 @@ app.use(bodyParser.json())
 const Schema=mongoose.Schema;
 
 var personSchema = new Schema({
-  url: {
+  username: {
     type: String,
     required: true
-  }
+  },
+  description: String,
+  duration: Number,
+  date: Date
+
 })
 var Person = mongoose.model('Person', personSchema); 
 
+var createAndSavePerson = function(done) {
+  var newUser = new Person({});
+
+  newUser.save(function(err, data) {
+    if (err) return console.error(err);
+    done(null, data)
+  });
+};
 
 
 
@@ -55,6 +67,12 @@ app.use((err, req, res, next) => {
   res.status(errCode).type('txt')
     .send(errMessage)
 })
+
+
+
+
+
+
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
