@@ -68,8 +68,15 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
+app.get("/api/exercise/new-user", function(req, res,) {
+ 
 
+  res.send({username:req.query.username});
+})
 
+app.post("/api/exercise/new-user", function(req,res){
+  res.json({username: req.body.username})
+})
 
 
 
