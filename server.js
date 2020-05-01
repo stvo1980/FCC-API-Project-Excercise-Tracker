@@ -106,7 +106,7 @@ app.post('/api/exercise/add',(req,res) => {
   if (req.body.date != ''){
     dateVar = new Date(req.body.date); 
   }
-  
+  console.log(Person.username)
   let activity = {
     desc : req.body.description,
     duration: req.body.duration,
