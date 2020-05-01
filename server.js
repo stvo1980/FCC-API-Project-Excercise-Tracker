@@ -44,6 +44,10 @@ app.get('/', (req, res) => {
 });
 
 
+
+
+
+
 // Not found middleware
 app.use((req, res, next) => {
   return next({status: 404, message: 'not found'})
@@ -68,13 +72,13 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
-app.get("/api/exercise/new-user", function(req, res) {
+//app.get("/api/exercise/new-user", function(req, res) {
  
 
-  res.send({username:req.query.username});
-})
+ // res.send({username:"kitikfat"});
+//})
 
-app.post("/api/exercise/new-user", function(req,res){
+app.post("/new-user", function(req,res){
   res.json({username: "kellld"})
  // res.json({username: req.body.username})
 })
