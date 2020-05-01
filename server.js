@@ -20,21 +20,38 @@ var personSchema = new Schema({
     type: String,
     required: true
   },
-  description: String,
-  duration: Number,
-  date: Date
+  exercise:[{
+    description: String,
+    duration: Number,
+    date: {}
+  }]
 
 })
 var Person = mongoose.model('Person', personSchema); 
 
-var createAndSavePerson = function(done) {
-  var newUser = new Person({});
+var createAndSaveUser = function(name, done) {
+  Person.findOne({username:name}, function(err,data){
+    if(!data){
+      var newUser = new Person({username:name});
+      newUser.save(function(err,data){
+        if (err) return done(err);
+        done(null, data)
+      })
+    } else {
+      done(null,"taken");
+    }
+  })
+}
 
-  newUser.save(function(err, data) {
-    if (err) return console.error(err);
-    done(null, data)
-  });
-};
+ 
+
+
+
+
+
+
+
+
 
 
 
@@ -45,7 +62,7 @@ app.get('/', (req, res) => {
 
 
 app.post("/api/exercise/new-user", function(req,res){
-  res.json({username:req.body.username, _id:})
+  res.json({username:req.body.username, _id:"id"})
 
 })
 
