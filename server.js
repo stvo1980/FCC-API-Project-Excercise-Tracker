@@ -30,17 +30,14 @@ var personSchema = new Schema({
 var Person = mongoose.model('Person', personSchema); 
 
 var createAndSaveUser = function(name, done) {
-  Person.findOne({username:name}, function(err,data){
-    if(data==null){
+  
       var newUser = new Person({username:name});
       newUser.save(function(err,data){
         if (err) return done(err);
         done(null, data)
       })
-    } else {
-      done(null,"taken");
-    }
-  })
+    
+  
 }
 
  app.post('/api/exercise/new-user',(req,res) => {
@@ -48,7 +45,7 @@ var createAndSaveUser = function(name, done) {
     if(err){
       res.send({error:"Error, Please try again"});
     }else if (data = 'taken'){
-      res.send({"error":"Username already taken"})
+      res.send({"error":"Username already exist"})
     }else{
       res.json({"username":data.username,"id":data._id});
       
