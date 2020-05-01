@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MLAB_URI || 3000 )
+mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
 
 app.use(cors())
 
@@ -15,43 +15,51 @@ app.use(bodyParser.json())
 
 const Schema=mongoose.Schema;
 
-var personSchema = new Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  exercise:[{
-    description: String,
+const PersonSchema = new Schema ({
+  
+  username: String,
+  exercise: [{
+    desc : String,
     duration: Number,
-    date: {}
+    date : {}
   }]
+});
 
-})
-var Person = mongoose.model('Person', personSchema); 
+var Person = mongoose.model('Person', PersonSchema); 
 
-var createAndSaveUser = function(name, done) {
-  
-      var newUser = new Person({username:name});
-      newUser.save(function(err,data){
-        if (err) return done(err);
-        done(null, data)
-      })
-    
-  
-}
+const createPerson = (name, done) => {
+  Person.findOne({username:name}, (err,findData)=>{
+    if (findData == null){
+      //no user currently, make new
+      const person = new Person({username : name, exercise : []});
+      person.save((err,data)=>{
+        if(err){
+          done(err);
+        }
+        done(null , data);
+      });
+    }else if (err){
+      done(err);
+    }else{
+      //username taken
+      done(null,"taken");
+    }
+  });
+};
 
- app.post('/api/exercise/new-user',(req,res) => {
-  createAndSaveUser(req.body.username, (err,data)=>{
+app.post('/api/exercise/new-user',(req,res) => {
+  createPerson(req.body.username, (err,saveData)=>{
     if(err){
       res.send({error:"Error, Please try again"});
-    }else if (data = 'taken'){
-      res.send({"error":"Username already exist"})
+    }else if (saveData = 'taken'){
+      res.send({"error":"Username already taken"})
     }else{
-      res.json({"username":data.username,"id":data._id});
-      
+      res.send({"username":saveData.username,"id":saveData.shortId});
     }
   });
 });
+
+
 
 
 
