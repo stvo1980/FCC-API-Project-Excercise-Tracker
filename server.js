@@ -78,6 +78,11 @@ app.use((err, req, res, next) => {
  // res.send({username:"kitikfat"});
 //})
 
+app.post("/new", function(req,res){
+  res.json({username: "kellld"})
+ // res.json({username: req.body.username})
+})
+
 app.post("/new-user", function(req,res){
   res.json({username: "kellld"})
  // res.json({username: req.body.username})
