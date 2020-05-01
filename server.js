@@ -31,7 +31,7 @@ var Person = mongoose.model('Person', personSchema);
 
 var createAndSaveUser = function(name, done) {
   Person.findOne({username:name}, function(err,data){
-    if(!data){
+    if(data==null){
       var newUser = new Person({username:name});
       newUser.save(function(err,data){
         if (err) return done(err);
@@ -43,7 +43,17 @@ var createAndSaveUser = function(name, done) {
   })
 }
 
- 
+ app.post('/api/exercise/new-user',(req,res) => {
+  createAndSaveUser(req.body.username, (err,data)=>{
+    if(err){
+      res.send({error:"Error, Please try again"});
+    }else if (data = 'taken'){
+      res.send({"error":"Username already taken"})
+    }else{
+      res.send({"username":data.username,"id":data._id});
+    }
+  });
+});
 
 
 
@@ -61,15 +71,20 @@ app.get('/', (req, res) => {
 });
 
 
-app.post("/api/exercise/new-user", function(req,res){
-  res.json({username:req.body.username, _id:"id"})
+//app.post("/api/exercise/new-user", function(req,res){
+//  let userName = req.body.username;
+//  let newUser = new Person({username:name});
+  
+  
+ // res.json({username:req.body.username, _id:"id"})
 
-})
+//})
 
-app.post("/new-user", function(req,res){
-  res.json({username: "kellld"})
- // res.json({username: req.body.username})
-})
+
+
+
+
+
 
 
 
