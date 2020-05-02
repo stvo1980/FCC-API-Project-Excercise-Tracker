@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 const Schema=mongoose.Schema;
 
 const PersonSchema = new Schema ({
- // shortId: {type: String, unique: true, default: shortId.generate},
+ 
  username: { type: String, required: true, unique: true },
   _id: { type: String, default: shortId.generate },
  exercise: [{
