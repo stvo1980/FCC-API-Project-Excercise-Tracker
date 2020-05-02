@@ -32,7 +32,7 @@ const PersonSchema = new Schema ({
  exercise: [{
     description : { type: String, required: true},
     duration: { type: Number, required: true},
-    date : {}
+    date : Date
   }]
 });
 
@@ -93,7 +93,7 @@ app.post("/api/exercise/add", function(req,res){
   if(dateInsert==""){
   dateInsert = new Date(Date.now()).toDateString();}
   else{
-    dateInsert = new Date(req.body.date).toDateString()
+    dateInsert = req.body.date
   }
   
   
