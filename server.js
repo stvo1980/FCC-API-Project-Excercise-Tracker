@@ -17,8 +17,8 @@ const Schema=mongoose.Schema;
 
 const PersonSchema = new Schema ({
   shortId: {type: String, unique: true, default: shortId.generate},
-  username: String,
-  exercise: [{
+ username: String,
+ exercise: [{
     desc : String,
     duration: Number,
     date : {}
@@ -26,6 +26,12 @@ const PersonSchema = new Schema ({
 });
 
 var Person = mongoose.model('Person', PersonSchema); 
+
+
+
+
+
+
 
 const createUser = (username, done) => {
   const newUser = new Person({
@@ -44,15 +50,27 @@ app.get('/', (req, res) => {
 });
 
 
-app.post("/api/exercise/new-user", function(req,res){
-  let userName = req.body.username;
+//app.post("/api/exercise/new-user", function(req,res){
+ // let userName = req.body.username;
 
-  createUser(userName, function(err,data){
-   res.json({username:userName, id:data._id})
-  });
+//  createUser(userName, function(err,data){
+//   res.json({username:userName, id:data._id})
+//  });
    
-   })
+//   })
 
+app.post("/api/exercise/new-user", (req, res) => {
+  let user = new Person({ username: req.body.username});
+  user.save(err => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: "username taken"
+      })
+    }
+    res.send({username: user.username, id: user._id});
+  })
+});
 
 
 
@@ -64,28 +82,28 @@ app.post("/api/exercise/new-user", function(req,res){
 
 
 // Not found middleware
-app.use((req, res, next) => {
-  return next({status: 404, message: 'not found'})
-})
+//app.use((req, res, next) => {
+ // return next({status: 404, message: 'not found'})
+//})
 
 // Error Handling middleware
-app.use((err, req, res, next) => {
-  let errCode, errMessage
+//app.use((err, req, res, next) => {
+//  let errCode, errMessage
 
-  if (err.errors) {
+ // if (err.errors) {
     // mongoose validation error
-    errCode = 400 // bad request
-    const keys = Object.keys(err.errors)
+ //   errCode = 400 // bad request
+ //   const keys = Object.keys(err.errors)
     // report the first validation error
-    errMessage = err.errors[keys[0]].message
-  } else {
+ //   errMessage = err.errors[keys[0]].message
+ // } else {
     // generic or custom error
-    errCode = err.status || 500
-    errMessage = err.message || 'Internal Server Error'
-  }
-  res.status(errCode).type('txt')
-    .send(errMessage)
-})
+//    errCode = err.status || 500
+ //   errMessage = err.message || 'Internal Server Error'
+ // }
+//  res.status(errCode).type('txt')
+//    .send(errMessage)
+//})
 
 
 
