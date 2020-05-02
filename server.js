@@ -27,9 +27,9 @@ const PersonSchema = new Schema ({
 
 var Person = mongoose.model('Person', PersonSchema); 
 
-const createUser = (newURL, done) => {
-  const newUser = new PersonSchema({
-    url: newURL
+const createUser = (username, done) => {
+  const newUser = new Person({
+    username: username
   })
   .save((err, data) => {
     if(err) return done(err)
@@ -48,38 +48,15 @@ app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
 
   createUser(userName, function(err,data){
-    res.json({username:userName, id:data._id})
+   res.json({username:userName, id:data._id})
   });
    
-    
-   
-  
- 
-
-})
+   })
 
 
-var findPeopleByName = function(personName, done) {
-  Person.find({name: personName}, function(err,peopleFound){
-    if(err) return console.log(err);
-    done(null, peopleFound);
-  })
-  
-
-};
 
 
-app.post("/api/exercise/new-user", function(req,res){
-  let userName = req.body.username;
- // let newUser = new Person({username:name});
-  createPerson(userName);
-   
-    
-   res.json({username:userName})
-  
- 
 
-})
 
 
 
