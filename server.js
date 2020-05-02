@@ -30,7 +30,7 @@ const PersonSchema = new Schema ({
  username: { type: String, required: true, unique: true },
   _id: { type: String, default: shortId.generate },
  exercise: [{
-    desc : String,
+    description : String,
     duration: Number,
     date : {}
   }]
@@ -88,7 +88,29 @@ app.post("/api/exercise/new-user", function(req,res){
 
 app.post("/api/exercise/add", function(req,res){
  // let userName = req.body.username;
-
+  
+var queryChain = function(done) {
+  var foodToSearch = "burrito";
+  var findQuery = Person
+    .find({userId: req.body.userId})
+    .sort({name: 1})
+    .limit(2)
+    .select({age: 0})
+    .exec(function(err, data){
+      if(err) return done(err);
+      done(null, data)
+      
+    }
+   );
+    
+   
+  }
+  
+  
+  
+  
+  
+  // the old lines
  let user = new Person({ username: req.body.username});
   user.save(err => {
     if (err) {
