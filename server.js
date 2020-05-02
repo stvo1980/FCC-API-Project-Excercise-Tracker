@@ -6,6 +6,10 @@ const cors = require('cors')
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
+.then(() => console.log("DB Connected!"))
+  .catch(err => {
+    console.log(`DB Connection Error: ${err.message}`);
+  });
 
 app.use(cors())
 
