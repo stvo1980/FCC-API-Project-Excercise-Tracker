@@ -3,13 +3,21 @@ const app = express()
 const bodyParser = require('body-parser')
 const shortId = require('shortid')
 const cors = require('cors')
-
+var autoIncrement = require('mongoose-auto-increment')
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
-.then(() => console.log("DB Connected!"))
-  .catch(err => {
-    console.log(`DB Connection Error: ${err.message}`);
-  });
+//mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
+//.then(() => console.log("DB Connected!"))
+//  .catch(err => {
+//    console.log(`DB Connection Error: ${err.message}`);
+//  });
+
+const connection = mongoose.createConnection(process.env.MLAB_URI)
+//.then(() => console.log("DB Connected!"))
+ // .catch(err => {
+  //  console.log(`DB Connection Error: ${err.message}`);
+ // });
+autoIncrement.initialize(connection)
+
 
 app.use(cors())
 
@@ -20,7 +28,7 @@ app.use(bodyParser.json())
 const Schema=mongoose.Schema;
 
 const PersonSchema = new Schema ({
-  shortId: {type: String, unique: true, default: shortId.generate},
+ // shortId: {type: String, unique: true, default: shortId.generate},
  username: String,
  exercise: [{
     desc : String,
@@ -29,7 +37,12 @@ const PersonSchema = new Schema ({
   }]
 });
 
-var Person = mongoose.model('Person', PersonSchema); 
+//var Person = mongoose.model('Person', PersonSchema); 
+
+PersonSchema.plugin(autoIncrement.plugin, 'Person')
+
+const Person = connection.model('Person', PersonSchema)
+
 
 
 const createUser = (username, done) => {
