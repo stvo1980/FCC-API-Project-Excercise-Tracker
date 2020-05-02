@@ -32,7 +32,7 @@ const PersonSchema = new Schema ({
  exercise: [{
     description : { type: String, required: true},
     duration: { type: Number, required: true},
-    date : Date
+    date : {}
   }]
 });
 
@@ -91,9 +91,9 @@ app.post("/api/exercise/add", function(req,res){
   
   let dateInsert = req.body.date;
   if(dateInsert==""){
-  dateInsert = new Date(Date.now());}
+  dateInsert = new Date(Date.now()).toDateString();}
   else{
-    dateInsert = new Date(req.body.date)
+    dateInsert = new Date(req.body.date).toDateString()
   }
   
   
@@ -104,7 +104,7 @@ app.post("/api/exercise/add", function(req,res){
       date: dateInsert
     }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id, date:dateInsert.toDateString()})
+    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id, date:dateInsert})
     })}
   else {
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
@@ -113,7 +113,7 @@ app.post("/api/exercise/add", function(req,res){
       date: dateInsert
       }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id,date:dateInsert.toDateString()})
+    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id,date:dateInsert})
     })
   }
    
