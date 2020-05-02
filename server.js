@@ -145,17 +145,21 @@ app.get("/api/exercise/users", (req, res) => {
 //userstory 5 create an array of all users logs
 app.get("/api/exercise/log/:personId?", (req, res) => {
   let findId = req.params.personId;
-  Person.findById({_id:findId}, (err, users) => {
+  Person.findById({_id:findId}, (err, data) => {
     if (err) return res.send(err);
     let result = [];
-    users.forEach(user => {
-      result.push({username: user.username, _id: user._id});
+  result.push(data.duration)
+    console.log(result);
+    
+    // users.forEach(user => {
+  //    result.push({username: user.username, _id: user._id});
+     res.json({username:data.username, _id:data._id, description:data.exercise})
     });
-  
-  });
    console.log(findId)
+  });
+ // 
   
-});
+
 
 
 
