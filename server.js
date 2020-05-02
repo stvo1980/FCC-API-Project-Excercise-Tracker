@@ -91,9 +91,9 @@ app.post("/api/exercise/add", function(req,res){
   
   let dateInsert = req.body.date;
   if(dateInsert==""){
-  let dateInsert = new Date(Date.now()).toString();}
+  dateInsert = new Date(Date.now()).toISOString().split('T')[0];}
   else{
-    dateInsert = new Date(req.body.date).toString()
+    dateInsert = new Date(req.body.date)
   }
   
   
@@ -110,10 +110,10 @@ app.post("/api/exercise/add", function(req,res){
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
       duration: req.body.duration,
-      date: datedefault
+      date: dateInsert
       }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username,_id:data._id, description: req.body.description, duration:req.body.duration,date:datedefault})
+    res.send({username: data.username,_id:data._id, description: req.body.description, duration:req.body.duration,date:dateInsert})
     })
   }
    
