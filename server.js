@@ -29,10 +29,11 @@ const PersonSchema = new Schema ({
  // shortId: {type: String, unique: true, default: shortId.generate},
  username: { type: String, required: true, unique: true },
   _id: { type: String, default: shortId.generate },
-     description : { type: String, required: true},
+ exercise: [{
+    description : { type: String, required: true},
     duration: { type: Number, required: true},
     date : Date
-  
+  }]
 });
 
 var Person = mongoose.model('Person', PersonSchema); 
