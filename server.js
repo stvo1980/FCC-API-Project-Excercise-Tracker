@@ -68,19 +68,22 @@ app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
 
   createUser(userName, function(err,data){
-    if (err) {
-      return res.send({
-        success: false,
-        message: "username taken"
-      })
-    }
-    res.json({username:userName, id:data._id})
+    res.json({username:userName, _id:data._id})
   });
   
    })
 
 
-
+app.get("/api/exercise/users", (req, res) => {
+  Person.find({}, (err, users) => {
+    if (err) return res.send(err);
+    let userArray = [];
+    users.forEach(user => {
+      userArray.push({username: user.username, _id: user._id});
+    });
+    res.send(userArray)
+  });
+});
 
 
 
