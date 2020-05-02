@@ -100,10 +100,10 @@ app.get("/api/exercise/users", (req, res) => {
 
 
 var removeManyPeople = function(done) {
-//  var nameToRemove = "Mary";
+  var nameToRemove = "1";
 
   Person.remove(
-  {username:"1"},
+  {username: nameToRemove},
    
    function(err,data){
        if(err) return done(err);
