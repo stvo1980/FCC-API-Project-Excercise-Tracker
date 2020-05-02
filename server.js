@@ -58,8 +58,11 @@ app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
  // let newUser = new Person({username:name});
   createPerson(userName);
+   
+    
+   res.json({username:userName})
   
-  res.json({username:userName, id:data._id})
+ 
 
 })
 
