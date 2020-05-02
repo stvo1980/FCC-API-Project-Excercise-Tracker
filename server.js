@@ -29,11 +29,10 @@ const PersonSchema = new Schema ({
  // shortId: {type: String, unique: true, default: shortId.generate},
  username: { type: String, required: true, unique: true },
   _id: { type: String, default: shortId.generate },
- exercise: [{
-    description : { type: String, required: true},
+     description : { type: String, required: true},
     duration: { type: Number, required: true},
     date : Date
-  }]
+  
 });
 
 var Person = mongoose.model('Person', PersonSchema); 
@@ -104,7 +103,7 @@ app.post("/api/exercise/add", function(req,res){
       date: req.body.date
     }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username,_id:data._id, description: req.body.description, duration:req.body.duration, date:dateInsert})
+    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id, date:dateInsert})
     })}
   else {
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
@@ -113,7 +112,7 @@ app.post("/api/exercise/add", function(req,res){
       date: dateInsert
       }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username,_id:data._id, description: req.body.description, duration:req.body.duration,date:dateInsert})
+    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id,date:dateInsert})
     })
   }
    
