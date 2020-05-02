@@ -99,6 +99,19 @@ app.get("/api/exercise/users", (req, res) => {
 });
 
 
+var removeManyPeople = function(done) {
+//  var nameToRemove = "Mary";
+
+  Person.remove(
+  {username:"1"},
+   
+   function(err,data){
+       if(err) return done(err);
+      done(null, data)
+    }
+    
+  )
+};
 
 
 
