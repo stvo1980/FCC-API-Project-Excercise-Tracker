@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 const Schema=mongoose.Schema;
 
 const PersonSchema = new Schema ({
-  
+  shortId: {type: String, unique: true, default: shortId.generate},
   username: String,
   exercise: [{
     desc : String,
@@ -27,25 +27,15 @@ const PersonSchema = new Schema ({
 
 var Person = mongoose.model('Person', PersonSchema); 
 
-const createPerson = (name, done) => {
-  Person.findOne({username:name}, (err,findData)=>{
-    if (findData == null){
-      //no user currently, make new
-      const person = new Person({username : name, exercise : []});
-      person.save((err,data)=>{
-        if(err){
-          done(err);
-        }
-        done(null , data);
-      });
-    }else if (err){
-      done(err);
-    }else{
-      //username taken
-      done(null,"taken");
-    }
-  });
-};
+const createUser = (newURL, done) => {
+  const newUser = new PersonSchema({
+    url: newURL
+  })
+  .save((err, data) => {
+    if(err) return done(err)
+    return done(null, data)
+  })
+}
 
 
 app.use(express.static('public'))
@@ -56,11 +46,13 @@ app.get('/', (req, res) => {
 
 app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
- // let newUser = new Person({username:name});
-  createPerson(userName);
+
+  createUser(userName, function(err,data){
+    res.json({username:userName, id:data._id})
+  });
    
     
-   res.json({username:userName})
+   
   
  
 
