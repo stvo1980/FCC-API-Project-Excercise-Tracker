@@ -88,32 +88,25 @@ app.post("/api/exercise/new-user", function(req,res){
 
 app.post("/api/exercise/add", function(req,res){
  // let userName = req.body.username;
-  
-Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
+  if(req.body.date)
+{Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
-      duration: req.body.duration, 
+      duration: req.body.duration,
       date: req.body.date
     }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
     res.send(data)
+    })}
+  else {
+    Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
+      description: req.body.description, 
+      duration: req.body.duration
+      }}},{ "new": true, "upsert": true },(err, data) => {
+    if (err) return res.send(err);
+    res.send(data)
     })
-  
-  
-  
-  
-  
-  // the old lines
- let user = new Person({ username: req.body.username});
-  user.save(err => {
-    if (err) {
-      return res.send({
-        success: false,
-        message: "Sorry, this name already exists"
-      })
-    }
-    res.send({username: user.username, _id: user._id});
-  })
-  
+  }
+   
    })
 
 
