@@ -78,13 +78,34 @@ app.post("/api/exercise/new-user", function(req,res){
     if (err) {
       return res.send({
         success: false,
-        message: "username taken"
+        message: "Sorry, this name already exists"
       })
     }
     res.send({username: user.username, _id: user._id});
   })
   
    })
+
+app.post("/api/exercise/add", function(req,res){
+ // let userName = req.body.username;
+
+ let user = new Person({ username: req.body.username});
+  user.save(err => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: "Sorry, this name already exists"
+      })
+    }
+    res.send({username: user.username, _id: user._id});
+  })
+  
+   })
+
+
+
+
+
 
 //userstory 3 create an array of all users
 app.get("/api/exercise/users", (req, res) => {
