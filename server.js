@@ -11,11 +11,9 @@ const mongoose = require('mongoose')
 //    console.log(`DB Connection Error: ${err.message}`);
 //  });
 
+
+//need to switch to shortId after finishing working
 const connection = mongoose.createConnection(process.env.MLAB_URI)
-//.then(() => console.log("DB Connected!"))
- // .catch(err => {
-  //  console.log(`DB Connection Error: ${err.message}`);
- // });
 autoIncrement.initialize(connection)
 
 
@@ -65,16 +63,11 @@ app.get('/', (req, res) => {
 
 
 app.post("/api/exercise/new-user", function(req,res){
- let user = new Person({ username: req.body.username});
-  user.save(err => {
-    if (err) {
-      return res.send({
-        success: false,
-        message: "username taken"
-      })
-    }
-    res.send({username: user.username, _id: user._id});
-  })
+  let userName = req.body.username;
+
+  createUser(userName, function(err,data){
+    res.json({username:userName, _id:data._id})
+  });
   
    })
 
