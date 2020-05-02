@@ -96,7 +96,8 @@ app.post("/api/exercise/add", function(req,res){
   ;}
   else{
  //   dateInsert = req.body.date
-    dateInsert = new Date(Date.now()).toDateString()
+    dateInsert = new Date(Date.now()).toDateString();
+  //  res.send({error:"this date format is incorrect"})
   }
   
   
@@ -141,8 +142,47 @@ app.get("/api/exercise/users", (req, res) => {
 });
 
 
+//userstory 5 create an array of all users logs
+//app.get("/api/exercise/log", (req, res) => {
+//  Person.findById({_id:personId}, (err, users) => {
+ //   if (err) return res.send(err);
+ //   let result = [];
+ //   users.forEach(user => {
+ //     result.push({username: user.username, _id: user._id, description:user.description, duration:user.duration, date:user.date});
+  //  });
+ //   res.json(result)
+//  });
+//});
 
-
+app.get('/api/exercise/log', (req, res) => {
+  let log = [];
+  let qLimit = req.query.limit;
+  let qFrom = req.query.from;
+  let qTo = req.query.to;
+  User.findOne({_id: req.query.userId}, (err, data) => {
+    if (err) {
+      res.send(err);
+    }
+    log = data.exercises.slice();
+    if (qFrom && !qTo) {
+      log = log.filter(item => new Date(item.date).getTime() > new Date(qFrom).getTime());
+    } else if (!qFrom && qTo) {
+      log = log.filter(item => new Date(item.date).getTime() < new Date(qTo).getTime());
+    } else if (qFrom && qTo) {
+      log = log.filter(item => new Date(item.date).getTime() > new Date(qFrom).getTime() 
+                    && new Date(item.date).getTime() < new Date(qTo).getTime());
+    }
+    if (qLimit) {
+      log = log.slice(0, qLimit);
+    }
+    res.send({
+      username: data.username, 
+      _id: data._id, 
+      count: data.exercises.length,
+      log: log
+    });
+  })
+})
 
 
 
