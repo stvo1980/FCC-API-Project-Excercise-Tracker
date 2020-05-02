@@ -88,7 +88,7 @@ app.post("/api/exercise/new-user", function(req,res){
 
 app.post("/api/exercise/add", function(req,res){
  // let userName = req.body.username;
-  let datedefault = Date.now().toString();
+  let datedefault =new Date(Date.now()).toString();
   if(req.body.date)
 {Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
@@ -96,7 +96,7 @@ app.post("/api/exercise/add", function(req,res){
       date: req.body.date
     }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username, description: req.body.description, duration:req.body.duration, date:req.body.date})
+    res.send({username: data.username,_id:data._id, description: req.body.description, duration:req.body.duration, date:req.body.date})
     })}
   else {
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
@@ -105,7 +105,7 @@ app.post("/api/exercise/add", function(req,res){
       date: Date.now()
       }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username, description: req.body.description, duration:req.body.duration,date:datedefault})
+    res.send({username: data.username,_id:data._id, description: req.body.description, duration:req.body.duration,date:datedefault})
     })
   }
    
