@@ -51,6 +51,7 @@ const createUser = (username, done) => {
     if(err) return done(err)
     return done(null, data)
   })
+  
 }
 
 
@@ -69,11 +70,18 @@ var findUserByUsername = function(username, done) {
 
 
 app.post("/api/exercise/new-user", function(req,res){
-  let userName = req.body.username;
+ // let userName = req.body.username;
 
-  createUser(userName, function(err,data){
-    res.json({username:userName, _id:data._id})
-  });
+ let user = new Person({ username: req.body.username});
+  user.save(err => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: "username taken"
+      })
+    }
+    res.send({username: user.username, _id: user._id});
+  })
   
    })
 
