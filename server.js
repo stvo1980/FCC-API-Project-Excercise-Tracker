@@ -29,7 +29,7 @@ const Schema=mongoose.Schema;
 
 const PersonSchema = new Schema ({
  // shortId: {type: String, unique: true, default: shortId.generate},
- username: String,
+ username: { type: String, required: true, unique: true },
  exercise: [{
     desc : String,
     duration: Number,
@@ -62,10 +62,18 @@ app.get('/', (req, res) => {
 });
 
 
+
+
 app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
 
   createUser(userName, function(err,data){
+    if (err) {
+      return res.send({
+        success: false,
+        message: "username taken"
+      })
+    }
     res.json({username:userName, id:data._id})
   });
   
