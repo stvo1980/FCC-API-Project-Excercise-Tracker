@@ -17,30 +17,30 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 
-//const Schema=mongoose.Schema;
+const Schema=mongoose.Schema;
 
-//const PersonSchema = new Schema ({
-//  shortId: {type: String, unique: true, default: shortId.generate},
-// username: String,
-// exercise: [{
- //   desc : String,
-//    duration: Number,
- //   date : {}
-//  }]
-//});
+const PersonSchema = new Schema ({
+  shortId: {type: String, unique: true, default: shortId.generate},
+ username: String,
+ exercise: [{
+    desc : String,
+    duration: Number,
+    date : {}
+  }]
+});
 
-//var Person = mongoose.model('Person', PersonSchema); 
+var Person = mongoose.model('Person', PersonSchema); 
 
 
-//const createUser = (username, done) => {
-//  const newUser = new Person({
-//    username: username
-//  })
- // .save((err, data) => {
-  //  if(err) return done(err)
-  //  return done(null, data)
- // })
-//}
+const createUser = (username, done) => {
+  const newUser = new Person({
+    username: username
+  })
+  .save((err, data) => {
+    if(err) return done(err)
+    return done(null, data)
+  })
+}
 
 
 app.use(express.static('public'))
@@ -49,14 +49,14 @@ app.get('/', (req, res) => {
 });
 
 
-//app.post("/api/exercise/new-user", function(req,res){
-  //let userName = req.body.username;
+app.post("/api/exercise/new-user", function(req,res){
+  let userName = req.body.username;
 
- // createUser(userName, function(err,data){
-  //  res.json({username:userName, id:data._id})
- // });
+  createUser(userName, function(err,data){
+    res.json({username:userName, id:data._id})
+  });
   
-//   })
+   })
 
 
 
