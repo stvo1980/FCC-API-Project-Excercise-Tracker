@@ -46,6 +46,9 @@ const Person = connection.model('Person', PersonSchema)
 
 
 const createUser = (username, done) => {
+  Person.findOne({username:username}, (err,data)=>{
+    if (data == null){
+    
   const newUser = new Person({
     username: username
   })
@@ -53,8 +56,11 @@ const createUser = (username, done) => {
     if(err) return done(err)
     return done(null, data)
   })
+} else {
+  done(null,"taken");
 }
-
+  })
+  }
 
 app.use(express.static('public'))
 app.get('/', (req, res) => {
@@ -73,15 +79,15 @@ app.post("/api/exercise/new-user", function(req,res){
   
    })
 
-
+//userstory 3 create an array of all users
 app.get("/api/exercise/users", (req, res) => {
   Person.find({}, (err, users) => {
     if (err) return res.send(err);
-    let userArray = [];
+    let result = [];
     users.forEach(user => {
-      userArray.push({username: user.username, _id: user._id});
+      result.push({username: user.username, _id: user._id});
     });
-    res.send(userArray)
+    res.json(result)
   });
 });
 
