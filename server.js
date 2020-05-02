@@ -149,7 +149,9 @@ app.get("/api/exercise/log/:personId?", (req, res) => {
     if (err) return res.send(err);
     let result = [];
   result.push(data.duration)
-    console.log(result);
+   var calc = data.exercise;
+    var map = arr.map(item=>item.duration)
+    console.log(calc);
     
     // users.forEach(user => {
   //    result.push({username: user.username, _id: user._id});
