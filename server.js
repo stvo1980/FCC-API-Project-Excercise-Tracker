@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 //  });
 
 
-//need to switch to shortId after finishing working
+//need to switch to shortId after finishing work
 const connection = mongoose.createConnection(process.env.MLAB_URI)
 autoIncrement.initialize(connection)
 
@@ -58,16 +58,28 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
+//check if username is already exists
 
+var findUserByUsername = function(username, done) {
+  Person.findOne({username: username}, function(err,peopleFound){
+    if(err) return console.log(err);
+    done(null, peopleFound);
+  })
+  
+
+};
 
 
 
 app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
-
-  createUser(userName, function(err,data){
+if(findUserByUsername==0) 
+  {createUser(userName, function(err,data){
     res.json({username:userName, _id:data._id})
   });
+  } else {
+    res.json({error:"this username is already taken"})
+  }
   
    })
 
