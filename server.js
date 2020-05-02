@@ -67,9 +67,27 @@ app.post("/api/exercise/new-user", function(req,res){
 })
 
 
+var findPeopleByName = function(personName, done) {
+  Person.find({name: personName}, function(err,peopleFound){
+    if(err) return console.log(err);
+    done(null, peopleFound);
+  })
+  
+
+};
 
 
+app.post("/api/exercise/new-user", function(req,res){
+  let userName = req.body.username;
+ // let newUser = new Person({username:name});
+  createPerson(userName);
+   
+    
+   res.json({username:userName})
+  
+ 
 
+})
 
 
 
