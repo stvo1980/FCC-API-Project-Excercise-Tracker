@@ -149,10 +149,12 @@ app.get("/api/exercise/log/:personId?", (req, res) => {
     if (err) return res.send(err);
     let result = [];
     users.forEach(user => {
-      result.push({username: user.username, _id: user._id, description:user.description, duration:user.duration, date:user.date});
+      result.push({username: user.username, _id: user._id});
     });
-    res.json(result)
+  
   });
+   console.log(findId)
+  
 });
 
 
