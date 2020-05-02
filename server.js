@@ -32,7 +32,7 @@ const PersonSchema = new Schema ({
  exercise: [{
     description : String,
     duration: Number,
-    date : {}
+    date : { type: Date, default: Date.now()}
   }]
 });
 
@@ -89,22 +89,14 @@ app.post("/api/exercise/new-user", function(req,res){
 app.post("/api/exercise/add", function(req,res){
  // let userName = req.body.username;
   
-var queryChain = function(done) {
-  var foodToSearch = "burrito";
-  var findQuery = Person
-    .find({userId: req.body.userId})
-    .sort({name: 1})
-    .limit(2)
-    .select({age: 0})
-    .exec(function(err, data){
-      if(err) return done(err);
-      done(null, data)
-      
-    }
-   );
-    
-   
-  }
+Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
+      description: req.body.description, 
+      duration: req.body.duration, 
+      date: req.body.date
+    }}},{ "new": true, "upsert": true },(err, data) => {
+    if (err) return res.send(err);
+    res.send(data)
+    })
   
   
   
