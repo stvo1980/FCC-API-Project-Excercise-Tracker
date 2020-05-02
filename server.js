@@ -30,9 +30,9 @@ const PersonSchema = new Schema ({
  username: { type: String, required: true, unique: true },
   _id: { type: String, default: shortId.generate },
  exercise: [{
-    description : String,
-    duration: Number,
-    date : { type: Date, default: Date.now()}
+    description : { type: String, required: true},
+    duration: { type: Number, required: true},
+    date : Date
   }]
 });
 
@@ -91,9 +91,9 @@ app.post("/api/exercise/add", function(req,res){
   
   let dateInsert = req.body.date;
   if(dateInsert==""){
-  dateInsert = new Date(Date.now()).toISOString().split('T')[0];}
+  dateInsert = new Date(Date.now()).toDateString();}
   else{
-    dateInsert = new Date(req.body.date)
+    dateInsert = new Date(req.body.date).toDateString()
   }
   
   
