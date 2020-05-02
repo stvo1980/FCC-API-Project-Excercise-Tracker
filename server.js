@@ -150,12 +150,18 @@ app.get("/api/exercise/log/:personId?", (req, res) => {
     let result = [];
   result.push(data.duration)
    var calc = data.exercise;
-    var map = arr.map(item=>item.duration)
-    console.log(calc);
+    var map = calc.map(item=>item.duration);
+    var sum = map.reduce((a, b) => a + b, 0);
+    var list = calc.map(item=>{
+      return {duration:item.duration,description:item.description,
+        date:item.date}
+    })
+    console.log(list);
+    
     
     // users.forEach(user => {
   //    result.push({username: user.username, _id: user._id});
-     res.json({username:data.username, _id:data._id, description:data.exercise})
+     res.json({username:data.username, _id:data._id, log:data.exercise, total:sum})
     });
    console.log(findId)
   });
