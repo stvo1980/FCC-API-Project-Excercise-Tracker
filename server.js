@@ -10,7 +10,7 @@ mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
   .catch(err => {
     console.log(`DB Connection Error: ${err.message}`);
   });
-
+const dateValidator = /\d{4}-\d{2}-\d{2}/;
 
 //need to switch to shortId after finishing work
 //const connection = mongoose.createConnection(process.env.MLAB_URI)
@@ -90,10 +90,13 @@ app.post("/api/exercise/add", function(req,res){
  // let userName = req.body.username;
   
   let dateInsert = req.body.date;
-  if(dateInsert==""){
-  dateInsert = new Date(Date.now()).toDateString();}
-  else{
+  let dateCheck = dateValidator.test(req.body.date)
+  if(dateCheck){
     dateInsert = req.body.date
+  ;}
+  else{
+ //   dateInsert = req.body.date
+    dateInsert = new Date(Date.now()).toDateString()
   }
   
   
