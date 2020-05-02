@@ -59,27 +59,21 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 //check if username is already exists
-
 var findUserByUsername = function(username, done) {
-  Person.findOne({username: username}, function(err,peopleFound){
+  Person.find({name: username}, function(err,peopleFound){
     if(err) return console.log(err);
     done(null, peopleFound);
   })
-  
-
-};
+  };
 
 
 
 app.post("/api/exercise/new-user", function(req,res){
   let userName = req.body.username;
-if(findUserByUsername==0) 
-  {createUser(userName, function(err,data){
+
+  createUser(userName, function(err,data){
     res.json({username:userName, _id:data._id})
   });
-  } else {
-    res.json({error:"this username is already taken"})
-  }
   
    })
 
