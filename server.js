@@ -95,7 +95,7 @@ app.post("/api/exercise/add", function(req,res){
       date: req.body.date
     }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send(data)
+    res.send({username: data.username, description: req.body.description, duration:req.body.duration})
     })}
   else {
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
