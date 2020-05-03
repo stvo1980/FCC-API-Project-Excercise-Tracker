@@ -144,8 +144,8 @@ app.get("/api/exercise/users", (req, res) => {
 
 
 //userstory 5 create an array of all users logs
-app.get("/api/exercise/log/:personId?", (req, res) => {
-  let findId = req.params.personId;
+app.get("/api/exercise/log/:userId?", (req, res) => {
+  let findId = req.params.userId;
   Person.findById({_id:findId}, (err, data) => {
     if (err) return res.send(err);
     let result = [];
