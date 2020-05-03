@@ -162,7 +162,7 @@ app.get("/api/exercise/log/:personId?", (req, res) => {
     
     // users.forEach(user => {
   //    result.push({username: user.username, _id: user._id});
-     res.json({username:data.username, _id:data._id, total:sum, log:list})
+     res.json({username:data.username, _id:data._id, count:sum+" minutes", log:list})
     });
  //  console.log(findId)
   });
