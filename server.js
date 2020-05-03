@@ -32,7 +32,7 @@ const PersonSchema = new Schema ({
  exercise: [{
     description : { type: String, required: true},
     duration: { type: Number, required: true},
-    date : Date
+    date : { type: Date, required: false}
   }]
 });
 
@@ -162,7 +162,7 @@ app.get("/api/exercise/log/:personId?", (req, res) => {
     
     // users.forEach(user => {
   //    result.push({username: user.username, _id: user._id});
-     res.json({username:data.username, _id:data._id, log:list, total:sum})
+     res.json({username:data.username, _id:data._id, total:sum, log:list})
     });
  //  console.log(findId)
   });
