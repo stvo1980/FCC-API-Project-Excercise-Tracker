@@ -144,7 +144,7 @@ app.get("/api/exercise/users", (req, res) => {
 
 
 //userstory 5 create an array of all users logs
-app.get("/api/exercise/log?{userId}[&from][&to][&limit]", (req, res) => {
+app.get("/api/exercise/log/:userId?", (req, res) => {
   let findId = req.params.userId;
   Person.findById({_id:findId}, (err, data) => {
     if (err) return res.send(err);
@@ -152,7 +152,8 @@ app.get("/api/exercise/log?{userId}[&from][&to][&limit]", (req, res) => {
   result.push(data.duration)
    var calc = data.exercise;
     var map = calc.map(item=>item.duration);
-    var sum = map.reduce((a, b) => a + b, 0);
+ //   var sum = map.reduce((a, b) => a + b, 0);
+    var count=map.length;
     var list = calc.map(item=>{
       return {description:item.description, duration:item.duration,
         date:item.date.toDateString()}
@@ -162,7 +163,7 @@ app.get("/api/exercise/log?{userId}[&from][&to][&limit]", (req, res) => {
     
     // users.forEach(user => {
   //    result.push({username: user.username, _id: user._id});
-     res.json({username:data.username, _id:data._id, count:sum+" minutes", log:list})
+     res.json({username:data.username, _id:data._id, count:count, log:list})
     });
  //  console.log(findId)
   });
