@@ -70,24 +70,16 @@ var findUserByUsername = function(username, done) {
 
 
 
-app.post("/api/exercise/new-user", function(req,res,next){
+app.post("/api/exercise/new-user", function(req,res){
  // let userName = req.body.username;
 
  let user = new Person({ username: req.body.username});
-  user.save((err,data) => {
+  user.save(err => {
     if (err) {
-      if(err.code == 11000) {
-        // uniqueness error (no custom message)
-        return next({
-          status: 400,
-          message: 'Sorry, this username already taken'
-        })
-      } else {
-        return next(err)
-      }
+      return res.send({
+        error: "Sorry, this name already exists"
+      })
     }
-    
-    
     res.send({username: user.username, _id: user._id});
   })
   
@@ -130,25 +122,8 @@ app.post("/api/exercise/add", function(req,res){
   } else{res.send({error:"duration is required"})}
   } else {res.send({error:"description is required"})}
     
-//  else {
-  //  Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
-//      description: req.body.description, 
-//      duration: req.body.duration,
-//      date: dateInsert
-//      }}},{ "new": true, "upsert": true },(err, data) => {
-//    if (err) return res.send(err);
-//    res.send({username: data.username, 
-//              description: req.body.description, 
-//             duration:req.body.duration,
- //             _id:data._id,
- //             date:dateInsert})
-//    })
-//  }
    
    })
-
-
-
 
 
 
@@ -219,18 +194,6 @@ app.get("/api/exercise/log/", (req, res) => {
     })
   
   });
-
-
-  
-  
-//  console.log("check")
-
-
-
-
-
-
-
 
 
 // Not found middleware
