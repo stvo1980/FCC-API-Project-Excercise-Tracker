@@ -70,17 +70,24 @@ var findUserByUsername = function(username, done) {
 
 
 
-app.post("/api/exercise/new-user", function(req,res){
+app.post("/api/exercise/new-user", function(req,res,next){
  // let userName = req.body.username;
 
  let user = new Person({ username: req.body.username});
-  user.save(err => {
+  user.save((err,data) => {
     if (err) {
-      return res.send({
-        success: false,
-        message: "Sorry, this name already exists"
-      })
+      if(err.code == 11000) {
+        // uniqueness error (no custom message)
+        return next({
+          status: 400,
+          message: 'Sorry, this username already taken'
+        })
+      } else {
+        return next(err)
+      }
     }
+    
+    
     res.send({username: user.username, _id: user._id});
   })
   
