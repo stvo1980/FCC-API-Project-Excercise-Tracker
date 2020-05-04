@@ -110,7 +110,11 @@ app.post("/api/exercise/add", function(req,res){
   
     }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id, date:dateInsert})
+    res.send({username: data.username, 
+              description: req.body.description, 
+              duration:req.body.duration,
+              _id:data._id, 
+              date:dateInsert})
     })}
   else {
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
@@ -119,7 +123,10 @@ app.post("/api/exercise/add", function(req,res){
       date: dateInsert
       }}},{ "new": true, "upsert": true },(err, data) => {
     if (err) return res.send(err);
-    res.send({username: data.username, description: req.body.description, duration:req.body.duration,_id:data._id,date:dateInsert})
+    res.send({username: data.username, 
+              description: req.body.description, 
+              duration:req.body.duration,
+              _id:data._id,date:dateInsert})
     })
   }
    
@@ -156,12 +163,13 @@ app.get("/api/exercise/log/", (req, res) => {
    // console.log(userTest);
     var exercises = data.exercise;
     var log = exercises.map(item=>{
-      return{description:item.description, duration:item.duration,
+      return{description:item.description, 
+             duration:item.duration,
         date:item.date.toDateString()
         
       }
     })
-    // I used this solution as a guide fro this block https://glitch.com/edit/#!/lean-natural-cough?path=server.js%3A38%3A19
+    // I used this solution as a guide from this block https://glitch.com/edit/#!/lean-natural-cough?path=server.js%3A38%3A19
     if(from) {
     var fromDate = new Date(from);
     log = log.filter(item => new Date(item.date) >= fromDate);
@@ -184,7 +192,7 @@ app.get("/api/exercise/log/", (req, res) => {
    
     
    // let toRep = new Date(to).toDateString();
-    console.log("fromDate", fromDate)
+  //  console.log("fromDate", fromDate)
   
     res.json({_id:data._id, 
               username:data.username, 
@@ -200,7 +208,7 @@ app.get("/api/exercise/log/", (req, res) => {
 
   
   
-  console.log("check")
+//  console.log("check")
 
 
 
