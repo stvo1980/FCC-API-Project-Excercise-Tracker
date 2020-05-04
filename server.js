@@ -160,8 +160,8 @@ app.get("/api/exercise/log/", (req, res) => {
         
       }
     })
-    console.log(exercises);
-    res.json({username:data.username, _id:data._id,  log:log})
+    console.log(exercises.length);
+    res.json({_id:data._id, username:data.username,  count:log.length, log:log})
   //  });
     
  //   let result = [];
