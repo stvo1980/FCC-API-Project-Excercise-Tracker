@@ -118,8 +118,8 @@ app.post("/api/exercise/add", function(req,res){
               _id:data._id, 
               date:dateInsert})
     })
-  } else{}
-  }
+  } else{res.send({error:"duration is required"})}
+  } else {res.send({error:"description is required"})}
 //  else {
   //  Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
 //      description: req.body.description, 
