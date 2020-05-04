@@ -163,25 +163,27 @@ app.get("/api/exercise/log/", (req, res) => {
     if(from) {
     const fromDate = new Date(from);
     log = log.filter(item => new Date(item.date) >= fromDate);
-    
+    return fromDate;
     
   }
   
   if(to) {
     const toDate = new Date(to);
     log = log.filter(item => new Date(item.date) <= toDate);
+    
   }
   
   if(limit) {
     log = log.slice(0, +limit);
   }
     //console.log(exercises.length);
-   let fromRep = new Date(from).toDateString();
-    let toRep
-    console.log(fromRep);
+ //  let fromRep = new Date(from).toDateString();
+ //   let toRep = new Date(to).toDateString();
+  //  console.log(fromRep);
     res.json({_id:data._id, 
               username:data.username, 
-              from, to,
+              from:fromDate, 
+              to:toDate,
               count:log.length, 
               log:log})
   
