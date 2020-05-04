@@ -103,9 +103,10 @@ app.post("/api/exercise/add", function(req,res){
 //  console.log("dateInsert",dateInsert)
   
   if(req.body.description){
-    if(req.body.duration)
-  { 
-    Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
+    if(req.body.duration) {
+   if(req.body.userId)
+    
+   { Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
       duration: req.body.duration,
       date: dateInsert,
@@ -118,8 +119,10 @@ app.post("/api/exercise/add", function(req,res){
               _id:data._id, 
               date:dateInsert})
     })
+    } else {res.send({error:"userId is required"})}
   } else{res.send({error:"duration is required"})}
   } else {res.send({error:"description is required"})}
+    
 //  else {
   //  Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
 //      description: req.body.description, 
