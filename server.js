@@ -151,6 +151,8 @@ app.get("/api/exercise/log/", (req, res) => {
 //let findId = req.params.userId;
   Person.findById({_id:userId}, (err, data) => {
     if (err) return res.send(err);
+    let userTest = userId;
+    console.log(userTest);
  //   let result = [];
 //  result.push(data.duration)
  //  var calc = data.exercise;
