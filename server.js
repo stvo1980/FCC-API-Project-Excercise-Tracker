@@ -146,7 +146,7 @@ app.get("/api/exercise/users", (req, res) => {
 //userId to test CmRktk94G    08SBBWEP8
 //userstory 5 create an array of all users logs
 app.get("/api/exercise/log/", (req, res) => {
- const { userId, from, to, limit } = req.query;
+ var { userId, from, to, limit } = req.query;
 
   Person.findById({_id:userId}, (err, data) => {
     if (err) return res.send(err);
@@ -163,7 +163,7 @@ app.get("/api/exercise/log/", (req, res) => {
     if(from) {
     const fromDate = new Date(from);
     log = log.filter(item => new Date(item.date) >= fromDate);
-    return fromDate;
+  
     
   }
   
@@ -177,13 +177,15 @@ app.get("/api/exercise/log/", (req, res) => {
     log = log.slice(0, +limit);
   }
     //console.log(exercises.length);
- //  let fromRep = new Date(from).toDateString();
- //   let toRep = new Date(to).toDateString();
-  //  console.log(fromRep);
+  let fromRep = new Date(from).toDateString();
+   
+    
+   // let toRep = new Date(to).toDateString();
+ //   console.log(from)
     res.json({_id:data._id, 
               username:data.username, 
-              from:fromDate, 
-              to:toDate,
+              from, 
+              to,
               count:log.length, 
               log:log})
   
