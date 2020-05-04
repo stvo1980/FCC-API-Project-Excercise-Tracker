@@ -165,6 +165,7 @@ app.get("/api/exercise/log/", (req, res) => {
     if(from) {
     var fromDate = new Date(from);
     log = log.filter(item => new Date(item.date) >= fromDate);
+    fromDate=fromDate.toDateString();
   
     
   }
@@ -172,7 +173,7 @@ app.get("/api/exercise/log/", (req, res) => {
   if(to) {
     var toDate = new Date(to);
     log = log.filter(item => new Date(item.date) <= toDate);
-    
+    toDate=toDate.toDateString();
   }
   
   if(limit) {
@@ -187,8 +188,8 @@ app.get("/api/exercise/log/", (req, res) => {
   
     res.json({_id:data._id, 
               username:data.username, 
-  //            test:data.date, 
-              to,
+              from:fromDate, 
+              to:toDate,
               count:log.length, 
               log:log})
   
