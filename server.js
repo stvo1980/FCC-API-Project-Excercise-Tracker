@@ -183,11 +183,11 @@ app.get("/api/exercise/log/", (req, res) => {
    
     
    // let toRep = new Date(to).toDateString();
-   // console.log(fromDate)
+    console.log("fromDate", fromDate)
   
     res.json({_id:data._id, 
               username:data.username, 
-              fromDate, 
+  //            test:data.date, 
               to,
               count:log.length, 
               log:log})
