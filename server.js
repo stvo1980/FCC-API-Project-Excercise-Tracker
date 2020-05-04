@@ -148,6 +148,8 @@ app.get("/api/exercise/users", (req, res) => {
 app.get("/api/exercise/log/", (req, res) => {
  var { userId, from, to, limit } = req.query;
 
+  
+  //console.log("from",fromDate);
   Person.findById({_id:userId}, (err, data) => {
     if (err) return res.send(err);
     let userTest = userId;
@@ -161,14 +163,14 @@ app.get("/api/exercise/log/", (req, res) => {
     })
     // I used this solution as a guide fro this block https://glitch.com/edit/#!/lean-natural-cough?path=server.js%3A38%3A19
     if(from) {
-    const fromDate = new Date(from);
+    var fromDate = new Date(from);
     log = log.filter(item => new Date(item.date) >= fromDate);
   
     
   }
   
   if(to) {
-    const toDate = new Date(to);
+    var toDate = new Date(to);
     log = log.filter(item => new Date(item.date) <= toDate);
     
   }
@@ -181,10 +183,11 @@ app.get("/api/exercise/log/", (req, res) => {
    
     
    // let toRep = new Date(to).toDateString();
- //   console.log(from)
+   // console.log(fromDate)
+  
     res.json({_id:data._id, 
               username:data.username, 
-              from, 
+              fromDate, 
               to,
               count:log.length, 
               log:log})
@@ -196,7 +199,7 @@ app.get("/api/exercise/log/", (req, res) => {
 
   
   
-
+  console.log("check")
 
 
 
