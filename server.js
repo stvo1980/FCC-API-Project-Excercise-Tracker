@@ -143,7 +143,7 @@ app.get("/api/exercise/users", (req, res) => {
 });
 
 
-//user to test CmRktk94G
+//user to test CmRktk94G    08SBBWEP8
 //userstory 5 create an array of all users logs
 app.get("/api/exercise/log/", (req, res) => {
  const { userId, from, to, limit } = req.query;
@@ -153,6 +153,17 @@ app.get("/api/exercise/log/", (req, res) => {
     if (err) return res.send(err);
     let userTest = userId;
     console.log(userTest);
+    var exercises = data.exercise;
+    var log = exercises.map(item=>{
+      return{description:item.description, duration:item.duration,
+        date:item.date.toDateString()
+        
+      }
+    })
+    console.log(exercises);
+    res.json({username:data.username, _id:data._id,  log:log})
+  //  });
+    
  //   let result = [];
 //  result.push(data.duration)
  //  var calc = data.exercise;
