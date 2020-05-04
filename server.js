@@ -159,6 +159,20 @@ app.get("/api/exercise/log/", (req, res) => {
         
       }
     })
+    // I used this solution as a guide fro this block https://glitch.com/edit/#!/lean-natural-cough?path=server.js%3A38%3A19
+    if(from) {
+    const fromDate = new Date(from);
+    log = log.filter(exe => new Date(exe.date) >= fromDate);
+  }
+  
+  if(to) {
+    const toDate = new Date(to);
+    log = log.filter(exe => new Date(exe.date) <= toDate);
+  }
+  
+  if(limit) {
+    log = log.slice(0, +limit);
+  }
     //console.log(exercises.length);
     res.json({_id:data._id, username:data.username,  count:log.length, log:log})
   
