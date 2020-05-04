@@ -143,16 +143,15 @@ app.get("/api/exercise/users", (req, res) => {
 });
 
 
-//user to test CmRktk94G    08SBBWEP8
+//userId to test CmRktk94G    08SBBWEP8
 //userstory 5 create an array of all users logs
 app.get("/api/exercise/log/", (req, res) => {
  const { userId, from, to, limit } = req.query;
 
-//let findId = req.params.userId;
   Person.findById({_id:userId}, (err, data) => {
     if (err) return res.send(err);
     let userTest = userId;
-    console.log(userTest);
+   // console.log(userTest);
     var exercises = data.exercise;
     var log = exercises.map(item=>{
       return{description:item.description, duration:item.duration,
@@ -160,31 +159,13 @@ app.get("/api/exercise/log/", (req, res) => {
         
       }
     })
-    console.log(exercises.length);
+    //console.log(exercises.length);
     res.json({_id:data._id, username:data.username,  count:log.length, log:log})
-  //  });
-    
- //   let result = [];
-//  result.push(data.duration)
- //  var calc = data.exercise;
- //   var map = calc.map(item=>item.duration);
- //   var sum = map.reduce((a, b) => a + b, 0);
-  //  var count=map.length;
-  //  var list = calc.map(item=>{
- //     return {description:item.description, duration:item.duration,
-  //      date:item.date.toDateString()}
+  
     })
-  //  console.log(list);
-    
-    
-  //   data.forEach(user => {
-    //  result.push({username: user.username, _id: user._id});
-  //  res.json({username:data.username, _id:data._id, count:count, log:list})
-  //  });
- //  console.log(findId)
+  
   });
- // 
-//})
+
 
   
   
