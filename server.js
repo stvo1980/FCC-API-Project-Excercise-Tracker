@@ -144,31 +144,64 @@ app.get("/api/exercise/users", (req, res) => {
 
 
 //userstory 5 create an array of all users logs
-app.get("/api/exercise/log/:userId?", (req, res) => {
-  let findId = req.params.userId;
-  Person.findById({_id:findId}, (err, data) => {
-    if (err) return res.send(err);
-    let result = [];
-  result.push(data.duration)
-   var calc = data.exercise;
-    var map = calc.map(item=>item.duration);
+//app.get("/api/exercise/log/:userId?", (req, res) => {
+ //const { userId, from, to, limit } = req.query;
+
+//let findId = req.params.userId;
+ // Person.findById({_id:findId}, (err, data) => {
+//    if (err) return res.send(err);
+ //   let result = [];
+ // result.push(data.duration)
+ //  var calc = data.exercise;
+ //   var map = calc.map(item=>item.duration);
  //   var sum = map.reduce((a, b) => a + b, 0);
-    var count=map.length;
-    var list = calc.map(item=>{
-      return {description:item.description, duration:item.duration,
-        date:item.date.toDateString()}
-    })
+  //  var count=map.length;
+  //  var list = calc.map(item=>{
+  //    return {description:item.description, duration:item.duration,
+   //     date:item.date.toDateString()}
+   // })
   //  console.log(list);
     
     
     // users.forEach(user => {
   //    result.push({username: user.username, _id: user._id});
-     res.json({username:data.username, _id:data._id, count:count, log:list})
-    });
+   //  res.json({username:data.username, _id:data._id, count:count, log:list})
+  //  });
  //  console.log(findId)
-  });
+ // });
  // 
+ //new version of log
+//const getExercises = (id) => data.exercises.filter(exe => exe._id === id);
+
+
+//app.get('/api/exercise/log', (req, res) => {
+//  const { userId, from, to, limit } = req.query;
   
+//  let log = getExercises(userId);
+  
+
+  
+//  if(from) {
+ //   const fromDate = new Date(from);
+ //   log = log.filter(exe => new Date(exe.date) >= fromDate);
+ // }
+  
+ // if(to) {
+  //  const toDate = new Date(to);
+   // log = log.filter(exe => new Date(exe.date) <= toDate);
+ // }
+  
+ // if(limit) {
+ //   log = log.slice(0, +limit);
+ // }
+  
+ // res.json({
+ //   _id: userId,
+  //  username: getUsernameById(userId),
+  //  count: log.length,
+  //  log
+ // });
+//});
 
 
 
