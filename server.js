@@ -151,27 +151,27 @@ app.get("/api/exercise/log/", (req, res) => {
 //let findId = req.params.userId;
   Person.findById({_id:userId}, (err, data) => {
     if (err) return res.send(err);
-    let result = [];
-  result.push(data.duration)
-   var calc = data.exercise;
-    var map = calc.map(item=>item.duration);
+ //   let result = [];
+//  result.push(data.duration)
+ //  var calc = data.exercise;
+ //   var map = calc.map(item=>item.duration);
  //   var sum = map.reduce((a, b) => a + b, 0);
-    var count=map.length;
-    var list = calc.map(item=>{
-      return {description:item.description, duration:item.duration,
-        date:item.date.toDateString()}
+  //  var count=map.length;
+  //  var list = calc.map(item=>{
+ //     return {description:item.description, duration:item.duration,
+  //      date:item.date.toDateString()}
     })
   //  console.log(list);
     
     
-     data.forEach(user => {
-      result.push({username: user.username, _id: user._id});
-    res.json({username:data.username, _id:data._id, count:count, log:list})
-    });
+  //   data.forEach(user => {
+    //  result.push({username: user.username, _id: user._id});
+  //  res.json({username:data.username, _id:data._id, count:count, log:list})
+  //  });
  //  console.log(findId)
   });
  // 
-})
+//})
 
   
   
