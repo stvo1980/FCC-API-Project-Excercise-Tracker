@@ -96,14 +96,13 @@ app.post("/api/exercise/add", function(req,res){
  //   dateInsert = req.body.date
   ;}
   else{
-    dateInsert = req.body.date
-   
-  //  res.send({error:"this date format is incorrect"})
+    dateInsert = req.body.date;
+
   }
   
   
-  if(req.body.date)
-{Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
+  if(req.body.date){
+    Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
       duration: req.body.duration,
       date: dateInsert,
@@ -115,7 +114,8 @@ app.post("/api/exercise/add", function(req,res){
               duration:req.body.duration,
               _id:data._id, 
               date:dateInsert})
-    })}
+    })
+  }
   else {
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
@@ -125,8 +125,9 @@ app.post("/api/exercise/add", function(req,res){
     if (err) return res.send(err);
     res.send({username: data.username, 
               description: req.body.description, 
-              duration:req.body.duration,
-              _id:data._id,date:dateInsert})
+             duration:req.body.duration,
+              _id:data._id,
+              date:dateInsert})
     })
   }
    
