@@ -96,12 +96,15 @@ app.post("/api/exercise/add", function(req,res){
  //   dateInsert = req.body.date
   ;}
   else{
-    dateInsert = req.body.date;
+  //  dateInsert = req.body.date;
+    dateInsert = new Date(req.body.date).toDateString();
 
   }
+//  console.log("dateInsert",dateInsert)
   
-  
-  if(req.body.date){
+  if(req.body.description){
+    if(req.body.duration)
+  { 
     Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
       duration: req.body.duration,
@@ -115,21 +118,22 @@ app.post("/api/exercise/add", function(req,res){
               _id:data._id, 
               date:dateInsert})
     })
+  } else{}
   }
-  else {
-    Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
-      description: req.body.description, 
-      duration: req.body.duration,
-      date: dateInsert
-      }}},{ "new": true, "upsert": true },(err, data) => {
-    if (err) return res.send(err);
-    res.send({username: data.username, 
-              description: req.body.description, 
-             duration:req.body.duration,
-              _id:data._id,
-              date:dateInsert})
-    })
-  }
+//  else {
+  //  Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
+//      description: req.body.description, 
+//      duration: req.body.duration,
+//      date: dateInsert
+//      }}},{ "new": true, "upsert": true },(err, data) => {
+//    if (err) return res.send(err);
+//    res.send({username: data.username, 
+//              description: req.body.description, 
+//             duration:req.body.duration,
+ //             _id:data._id,
+ //             date:dateInsert})
+//    })
+//  }
    
    })
 
