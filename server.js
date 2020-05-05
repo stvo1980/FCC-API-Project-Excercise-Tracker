@@ -82,7 +82,7 @@ app.post("/api/exercise/add", function(req, res) {
   let dateInsert = req.body.date;
 
   if (dateInsert == "") {
-    dateInsert = new Date.now();
+    dateInsert = new Date(Date.now());
     var dateFormat = dateInsert.toDateString()
         console.log(dateInsert)
     //dateInsert = req.body.date
@@ -95,7 +95,6 @@ app.post("/api/exercise/add", function(req, res) {
   if (req.body.description) {
     if (req.body.duration) {
       if (req.body.userId) {
-        
         Person.findOneAndUpdate(
           { _id: req.body.userId },
           {
