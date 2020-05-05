@@ -154,7 +154,7 @@ app.get("/api/exercise/log/", (req, res) => {
     var exercises = data.exercise;
     var log = exercises.map(item=>{
       return{description:item.description, 
-             duration:item.duration,
+             duration:paritem.duration,
         date:item.date.toDateString()
         
       }
