@@ -107,7 +107,7 @@ app.post("/api/exercise/add", function(req,res){
     
    { Person.findOneAndUpdate({_id: req.body.userId},{$push: {exercise:{
       description: req.body.description, 
-      duration: req.body.duration,
+      duration: parseInt(req.body.duration),
       date: dateInsert,
   
     }}},{ "new": true, "upsert": true },(err, data) => {
