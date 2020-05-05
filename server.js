@@ -114,7 +114,7 @@ app.post("/api/exercise/add", function(req,res){
     if (err) return res.send(err);
     res.send({username: data.username, 
               description: req.body.description, 
-              duration:req.body.duration,
+              duration:parseInt(req.body.duration),
               _id:data._id, 
               date:dateInsert})
     })
