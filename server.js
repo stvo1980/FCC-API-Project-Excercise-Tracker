@@ -29,7 +29,7 @@ const PersonSchema = new Schema({
   exercise: [
     {
       description: { type: String, required: true },
-      duration: { type: String, required: true },
+      duration: { type: Number, required: true },
       date: { type: Date, required: false }
     }
   ]
@@ -82,8 +82,10 @@ app.post("/api/exercise/add", function(req, res) {
   let dateInsert = req.body.date;
 
   if (dateInsert == "") {
-    dateInsert = new Date(req.body.date).toDateString();
-    //   dateInsert = req.body.date
+    dateInsert = new Date.now();
+    var dateFormat = dateInsert.toDateString()
+        console.log(dateInsert)
+    //dateInsert = req.body.date
   } else {
     //  dateInsert = req.body.date;
     dateInsert = new Date(req.body.date).toDateString();
@@ -93,6 +95,7 @@ app.post("/api/exercise/add", function(req, res) {
   if (req.body.description) {
     if (req.body.duration) {
       if (req.body.userId) {
+        
         Person.findOneAndUpdate(
           { _id: req.body.userId },
           {
