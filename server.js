@@ -81,9 +81,9 @@ app.post("/api/exercise/add", function(req, res) {
 
   let dateInsert = req.body.date;
 
-  if (dateInsert == "") {
-    dateInsert = new Date(Date.now());
-    var dateFormat = dateInsert.toDateString()
+  if (dateInsert==null) {
+    dateInsert = new Date();
+    dateInsert = dateInsert.toDateString()
         console.log(dateInsert)
     //dateInsert = req.body.date
   } else {
