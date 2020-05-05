@@ -82,7 +82,7 @@ app.post("/api/exercise/add", function(req, res) {
   let dateInsert = req.body.date;
 
   if (dateInsert == "") {
-    dateInsert = new Date().toDateString();
+    dateInsert = new Date(req.body.date).toDateString();
     //   dateInsert = req.body.date
   } else {
     //  dateInsert = req.body.date;
