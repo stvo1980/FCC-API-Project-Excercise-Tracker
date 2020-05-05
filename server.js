@@ -12,7 +12,7 @@ mongoose
     console.log(`DB Connection Error: ${err.message}`);
   });
 
-//need to switch to shortId after finishing work
+//this is to switch to short simple id incrementor
 //const connection = mongoose.createConnection(process.env.MLAB_URI)
 //autoIncrement.initialize(connection)
 
@@ -36,9 +36,8 @@ const PersonSchema = new Schema({
 });
 
 var Person = mongoose.model("Person", PersonSchema);
-
+// this is to switch to simple id numbers if needed
 //PersonSchema.plugin(autoIncrement.plugin, 'Person')
-
 //const Person = connection.model('Person', PersonSchema)
 
 const createUser = (username, done) => {
@@ -63,8 +62,6 @@ var findUserByUsername = function(username, done) {
 };
 
 app.post("/api/exercise/new-user", function(req, res) {
-  // let userName = req.body.username;
-
   let user = new Person({ username: req.body.username });
   user.save(err => {
     if (err) {
@@ -77,15 +74,15 @@ app.post("/api/exercise/new-user", function(req, res) {
 });
 
 app.post("/api/exercise/add", function(req, res) {
-  // let userName = req.body.username;
-
   let dateInsert = req.body.date;
 
-  if (dateInsert==null) {
+  if (req.body.date == "") {
     dateInsert = new Date();
-    dateInsert = dateInsert.toDateString()
-        console.log(dateInsert)
-    //dateInsert = req.body.date
+    dateInsert = dateInsert.toDateString();
+    //     console.log(dateInsert)
+  } else if (req.body.date == null) {
+    dateInsert = new Date();
+    dateInsert = dateInsert.toDateString();
   } else {
     //  dateInsert = req.body.date;
     dateInsert = new Date(req.body.date).toDateString();
